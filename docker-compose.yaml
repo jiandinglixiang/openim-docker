@@ -236,7 +236,7 @@ services:
       - IMENV_OPENIM_API_PROMETHEUS_GRAFANAURL=${GRAFANA_URL}
     restart: always
     depends_on:
-      - mongo
+      # - mongo
       - redis
       - etcd
       - kafka
@@ -270,7 +270,7 @@ services:
       - "${ADMIN_API_PORT}:10009"
     restart: always
     depends_on:
-      - mongo
+      # - mongo
       - redis
       - etcd
       - kafka
