@@ -246,7 +246,7 @@ services:
 
   openim-chat:
     image: ${OPENIM_CHAT_IMAGE}
-    # build: /home/openim-chat
+    build: /home/openim-chat
     container_name: openim-chat
     init: true
     healthcheck:
