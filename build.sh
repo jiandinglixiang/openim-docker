@@ -10,7 +10,7 @@ function update_git_repo {
 
     cd "$dir" || exit 1
     echo "Pulling latest changes from $dir..."
-    git fetch origin custom # 或者你使用的默认分支名
+    git pull origin custom # 或者你使用的默认分支名
     if [ $? -ne 0 ]; then
         echo "Error: Failed to pull updates from $dir."
         exit 1
