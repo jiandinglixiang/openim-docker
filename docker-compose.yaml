@@ -139,67 +139,69 @@ services:
     networks:
       - openim
 
-  prometheus:
-    image: ${PROMETHEUS_IMAGE}
-    container_name: prometheus
-    hostname: prometheus
-    restart: always
-    volumes:
-      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
-      - ./config/instance-down-rules.yml:/etc/prometheus/instance-down-rules.yml
-      - ${DATA_DIR}/components/prometheus/data:/prometheus
-    command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
-      - '--storage.tsdb.path=/prometheus'
-    ports:
-      - "${PROMETHEUS_PORT}:9090"
-    networks:
-      - openim
-
-  alertmanager:
-    image: ${ALERTMANAGER_IMAGE}
-    container_name: alertmanager
-    hostname: alertmanager
-    restart: always
-    volumes:
-      - ${DATA_DIR}/config/alertmanager.yml:/etc/alertmanager/alertmanager.yml
-      - ${DATA_DIR}/config/email.tmpl:/etc/alertmanager/email.tmpl
-    ports:
-      - "${ALERT_MANAGER_PORT}:9093"
-    networks:
-      - openim
-
-  grafana:
-    image: ${GRAFANA_IMAGE}
-    container_name: grafana
-    hostname: grafana
-    user: root
-    restart: always
-    ports:
-      - "${GRAFANA_PORT}:3000"
-    volumes:
-      - "${DATA_DIR}/components/grafana:/var/lib/grafana"
-    environment:
-      - GF_SECURITY_ALLOW_EMBEDDING=true
-      - GF_SESSION_COOKIE_SAMESITE=none
-      - GF_SESSION_COOKIE_SECURE=true
-      - GF_AUTH_ANONYMOUS_ENABLED=true
-      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
-    networks:
-      - openim
-
-  node-exporter:
-    image: ${NODE_EXPORTER_IMAGE}
-    container_name: node-exporter
-    hostname: node-exporter
-    restart: always
-    ports:
-      - "${NODE_EXPORTER_PORT}:9100"
-    networks:
-      - openim
+  #  以下是系统监控服务
+  #  prometheus:
+  #    image: ${PROMETHEUS_IMAGE}
+  #    container_name: prometheus
+  #    hostname: prometheus
+  #    restart: always
+  #    volumes:
+  #      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+  #      - ./config/instance-down-rules.yml:/etc/prometheus/instance-down-rules.yml
+  #      - ${DATA_DIR}/components/prometheus/data:/prometheus
+  #    command:
+  #      - '--config.file=/etc/prometheus/prometheus.yml'
+  #      - '--storage.tsdb.path=/prometheus'
+  #    ports:
+  #      - "${PROMETHEUS_PORT}:9090"
+  #    networks:
+  #      - openim
+  #
+  #  alertmanager:
+  #    image: ${ALERTMANAGER_IMAGE}
+  #    container_name: alertmanager
+  #    hostname: alertmanager
+  #    restart: always
+  #    volumes:
+  #      - ${DATA_DIR}/config/alertmanager.yml:/etc/alertmanager/alertmanager.yml
+  #      - ${DATA_DIR}/config/email.tmpl:/etc/alertmanager/email.tmpl
+  #    ports:
+  #      - "${ALERT_MANAGER_PORT}:9093"
+  #    networks:
+  #      - openim
+  #
+  #  grafana:
+  #    image: ${GRAFANA_IMAGE}
+  #    container_name: grafana
+  #    hostname: grafana
+  #    user: root
+  #    restart: always
+  #    ports:
+  #      - "${GRAFANA_PORT}:3000"
+  #    volumes:
+  #      - "${DATA_DIR}/components/grafana:/var/lib/grafana"
+  #    environment:
+  #      - GF_SECURITY_ALLOW_EMBEDDING=true
+  #      - GF_SESSION_COOKIE_SAMESITE=none
+  #      - GF_SESSION_COOKIE_SECURE=true
+  #      - GF_AUTH_ANONYMOUS_ENABLED=true
+  #      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+  #    networks:
+  #      - openim
+  #
+  #  node-exporter:
+  #    image: ${NODE_EXPORTER_IMAGE}
+  #    container_name: node-exporter
+  #    hostname: node-exporter
+  #    restart: always
+  #    ports:
+  #      - "${NODE_EXPORTER_PORT}:9100"
+  #    networks:
+  #      - openim
 
   openim-server:
     image: ${OPENIM_SERVER_IMAGE}
+    build: /home/openim-server
     container_name: openim-server
     init: true
     ports:
@@ -238,6 +240,7 @@ services:
 
   openim-chat:
     image: ${OPENIM_CHAT_IMAGE}
+    build: /home/openim-chat
     container_name: openim-chat
     init: true
     healthcheck:
