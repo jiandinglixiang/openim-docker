@@ -28,6 +28,7 @@ update_git_repo "/home/openim-docker"
 
 # 执行 docker-compose up -d
 cd "/home/openim-docker" || exit 1
+docker compose down
 echo "Starting or updating Docker containers..."
 docker compose up -d
 if [ $? -ne 0 ]; then
