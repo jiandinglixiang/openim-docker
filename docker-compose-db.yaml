@@ -48,3 +48,21 @@ services:
       - "27017:27017"
     networks:
       - openim
+    
+  minio:
+    image: "${MINIO_IMAGE}"
+    ports:
+      - "${MINIO_PORT}:9000"
+      - "${MINIO_CONSOLE_PORT}:9090"
+    container_name: minio
+    volumes:
+      - "${DATA_DIR}/components/mnt/data:/data"
+      - "${DATA_DIR}/components/mnt/config:/root/.minio"
+    environment:
+      TZ: Asia/Shanghai
+      MINIO_ROOT_USER: "${MINIO_ACCESS_KEY_ID}"
+      MINIO_ROOT_PASSWORD: "${MINIO_SECRET_ACCESS_KEY}"
+    restart: always
+    command: minio server /data --console-address ':9090'
+    networks:
+      - openim
