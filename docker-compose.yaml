@@ -200,8 +200,8 @@ services:
   #      - openim
 
   openim-server:
-    image: ${OPENIM_SERVER_IMAGE}
-    # build: /home/openim-server
+    #image: ${OPENIM_SERVER_IMAGE}  #使用已有的
+    build: /home/openim-server
     container_name: openim-server
     init: true
     ports:
