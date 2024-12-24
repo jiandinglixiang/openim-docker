@@ -76,8 +76,8 @@ services:
     environment:
       ME_CONFIG_BASICAUTH_USERNAME: "LIHUA"
       ME_CONFIG_BASICAUTH_PASSWORD: "LIHUA00"
-      ME_CONFIG_MONGODB_ENABLE_ADMIN: "true"
-      ME_CONFIG_MONGODB_URL: "mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongo:27017/"
+#      ME_CONFIG_MONGODB_ENABLE_ADMIN: "true"
+      ME_CONFIG_MONGODB_URL: "mongodb://root:openIM123@mongo:27017"
     depends_on:
       - mongo
     networks:
