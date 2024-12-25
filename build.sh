@@ -3,28 +3,34 @@
 # 定义函数来处理每个 git pull 操作
 function update_git_repo {
     local dir=$1
+    local branch=$2
+    if [ -z "$dir" ] || [ -z "$branch" ]; then
+        echo "Error: Directory or branch name not provided."
+        exit 1
+    fi
+
     if [ ! -d "$dir" ]; then
         echo "Error: Directory $dir does not exist."
         exit 1
     fi
 
     cd "$dir" || exit 1
-    echo "Pulling latest changes from $dir..."
-    git pull origin custom # 或者你使用的默认分支名
+    echo "Pulling latest changes from $dir on branch $branch..."
+    git pull origin "$branch"
     if [ $? -ne 0 ]; then
-        echo "Error: Failed to pull updates from $dir."
+        echo "Error: Failed to pull updates from $dir on branch $branch."
         exit 1
     fi
 }
 
-# 更新 /home/server 中的代码
-update_git_repo "/home/openim-server"
+# 更新 /home/server 中的代码，指定分支为 'custom'
+update_git_repo "/home/openim-server" "custom-v3.8.2"
 
-# 更新 /home/chat 中的代码
-update_git_repo "/home/openim-chat"
+# 更新 /home/chat 中的代码，指定分支为 'custom'
+update_git_repo "/home/openim-chat" "custom-v1.8.3"
 
-# 更新 /home/docker 中的代码
-update_git_repo "/home/openim-docker"
+# 更新 /home/docker 中的代码，指定分支为 'custom'
+update_git_repo "/home/openim-docker" "custom"
 
 # 执行 docker-compose up -d
 cd "/home/openim-docker" || exit 1
