@@ -60,7 +60,7 @@ services:
     restart: always
     sysctls:
       net.core.somaxconn: 1024
-    command: [ "redis-server", "/usr/local/redis/config/redis.conf", "--requirepass", "${REDIS_PASSWORD}", "--appendonly", "yes" ]
+    command: [ "redis-server", "/usr/local/redis/config/redis.conf", "--requirepass", "${REDIS_PASSWORD}", "--appendonly", "yes", "--bind", "0.0.0.0", "--protected-mode", "no" ]
     networks:
       - openim
 
@@ -80,6 +80,8 @@ services:
       - ETCD_INITIAL_CLUSTER=s1=http://0.0.0.0:2380
       - ETCD_INITIAL_CLUSTER_TOKEN=tkn
       - ETCD_INITIAL_CLUSTER_STATE=new
+      - ETCDCTL_API=3
+      - ETCDCTL_ENDPOINTS=http://0.0.0.0:2379
     restart: always
     networks:
       - openim
@@ -247,7 +249,7 @@ services:
       - openim
 
   openim-chat:
-    image: ${OPENIM_CHAT_IMAGE}
+    # image: ${OPENIM_CHAT_IMAGE}  #使用已有的
     build: /home/openim-chat
     container_name: openim-chat
     init: true
