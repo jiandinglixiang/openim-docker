@@ -64,27 +64,26 @@ services:
     networks:
       - openim
 
-  etcd:
-    image: "${ETCD_IMAGE}"
-    container_name: etcd
-    ports:
-      - "12379:2379"
-      - "12380:2380"
-    environment:
-      - ETCD_NAME=s1
-      - ETCD_DATA_DIR=/etcd-data
-      - ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379
-      - ETCD_ADVERTISE_CLIENT_URLS=http://0.0.0.0:2379
-      - ETCD_LISTEN_PEER_URLS=http://0.0.0.0:2380
-      - ETCD_INITIAL_ADVERTISE_PEER_URLS=http://0.0.0.0:2380
-      - ETCD_INITIAL_CLUSTER=s1=http://0.0.0.0:2380
-      - ETCD_INITIAL_CLUSTER_TOKEN=tkn
-      - ETCD_INITIAL_CLUSTER_STATE=new
-      - ETCDCTL_API=3
-      - ETCDCTL_ENDPOINTS=http://0.0.0.0:2379
-    restart: always
-    networks:
-      - openim
+  # etcd:
+  #   image: "${ETCD_IMAGE}"
+  #   container_name: etcd
+  #   ports:
+  #     - "12379:2379"
+  #     - "12380:2380"
+  #   environment:
+  #     - ETCD_NAME=s1
+  #     - ETCD_DATA_DIR=/etcd-data
+  #     - ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379
+  #     - ETCD_ADVERTISE_CLIENT_URLS=http://0.0.0.0:2379
+  #     - ETCD_LISTEN_PEER_URLS=http://0.0.0.0:2380
+  #     - ETCD_INITIAL_ADVERTISE_PEER_URLS=http://0.0.0.0:2380
+  #     - ETCD_INITIAL_CLUSTER=s1=http://0.0.0.0:2380
+  #     - ETCD_INITIAL_CLUSTER_TOKEN=tkn
+  #     - ETCD_INITIAL_CLUSTER_STATE=new
+  #     - ETCDCTL_API=3
+  #   restart: always
+  #   networks:
+  #     - openim
 
   kafka:
     image: "${KAFKA_IMAGE}"
@@ -228,6 +227,8 @@ services:
       - IMENV_MONGODB_PASSWORD=${MONGO_PASSWORD}
       - IMENV_KAFKA_ADDRESS=${KAFKA_ADDRESS}
       - IMENV_DISCOVERY_ETCD_ADDRESS=${ETCD_ADDRESS}
+      - IMENV_DISCOVERY_ETCD_USERNAME=${ETCD_USERNAME}
+      - IMENV_DISCOVERY_ETCD_PASSWORD=${ETCD_PASSWORD}
       - IMENV_REDIS_ADDRESS=${REDIS_ADDRESS}
       - IMENV_REDIS_PASSWORD=${REDIS_PASSWORD}
       - IMENV_MINIO_INTERNALADDRESS=${MINIO_INTERNAL_ADDRESS}
@@ -242,7 +243,7 @@ services:
     depends_on:
       # - mongo
       - redis
-      - etcd
+      # - etcd
       - kafka
       # - minio
     networks:
@@ -263,6 +264,8 @@ services:
       - CHATENV_MONGODB_USERNAME=${MONGO_USERNAME}
       - CHATENV_MONGODB_PASSWORD=${MONGO_PASSWORD}
       - CHATENV_DISCOVERY_ETCD_ADDRESS=${ETCD_ADDRESS}
+      - CHATENV_DISCOVERY_ETCD_USERNAME=${ETCD_USERNAME}
+      - CHATENV_DISCOVERY_ETCD_PASSWORD=${ETCD_PASSWORD}
       - CHATENV_REDIS_ADDRESS=${REDIS_ADDRESS}
       - CHATENV_REDIS_PASSWORD=${REDIS_PASSWORD}
       - CHATENV_SHARE_OPENIM_SECRET=${OPENIM_SECRET}
@@ -276,7 +279,7 @@ services:
     depends_on:
       # - mongo
       - redis
-      - etcd
+      # - etcd
       - kafka
       # - minio
       - openim-server
