@@ -93,12 +93,13 @@ services:
     container_name: mongo-express
     restart: always
     ports:
-      - "11008:8081"
+      - "${MONGO_EXPRESS_PORT}:8081"
     environment:
-      ME_CONFIG_BASICAUTH_USERNAME: "LIHUA"
-      ME_CONFIG_BASICAUTH_PASSWORD: "LIHUA00"
-      ME_CONFIG_MONGODB_URL: "mongodb://root:openIM123@mongo:27017"
+      ME_CONFIG_BASICAUTH_USERNAME: "${MONGO_EXPRESS_USERNAME}"
+      ME_CONFIG_BASICAUTH_PASSWORD: "${MONGO_EXPRESS_PASSWORD}"
+      ME_CONFIG_MONGODB_URL: "mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongo:27017"
     depends_on:
       - mongo
     networks:
       - openim
+
