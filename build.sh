@@ -15,6 +15,14 @@ function update_git_repo {
     fi
 
     cd "$dir" || exit 1
+    
+    echo "Fetching remote changes..."
+    git fetch origin
+    if [ $? -ne 0 ]; then
+        echo "Error: Failed to fetch remote changes."
+        exit 1
+    fi
+
     echo "Switching to branch $branch..."
     git checkout "$branch"
     if [ $? -ne 0 ]; then
