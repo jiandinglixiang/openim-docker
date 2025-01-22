@@ -23,11 +23,11 @@ function update_git_repo {
     fi
 }
 
-# 更新 /home/server 中的代码，指定分支为 'custom'
-update_git_repo "/home/openim-server" "custom-v3.8.2"
+# 更新 /home/server 中的代码，指定分支为 'release'
+update_git_repo "/home/openim-server" "release-v3.8.3"
 
-# 更新 /home/chat 中的代码，指定分支为 'custom'
-update_git_repo "/home/openim-chat" "custom-v1.8.3"
+# 更新 /home/chat 中的代码，指定分支为 'release'
+update_git_repo "/home/openim-chat" "release-v1.8.4"
 
 # 更新 /home/docker 中的代码，指定分支为 'custom'
 update_git_repo "/home/openim-docker" "custom"
