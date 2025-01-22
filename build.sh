@@ -15,6 +15,13 @@ function update_git_repo {
     fi
 
     cd "$dir" || exit 1
+    echo "Switching to branch $branch..."
+    git checkout "$branch"
+    if [ $? -ne 0 ]; then
+        echo "Error: Failed to switch to branch $branch."
+        exit 1
+    fi
+
     echo "Pulling latest changes from $dir on branch $branch..."
     git pull origin "$branch"
     if [ $? -ne 0 ]; then
